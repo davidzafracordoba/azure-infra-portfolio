@@ -1,0 +1,62 @@
+name: Desplegar infraestructura
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'infra/**'
+      - '.github/workflows/despliegue.yml'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  validar:
+    name: Validar plantillas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Iniciar sesion en Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Comprobar que las plantillas compilan
+        run: az bicep build --file infra/main.bicep
+
+      - name: Previsualizar cambios
+        run: |
+          az deployment sub what-if \
+            --location spaincentral \
+            --template-file infra/main.bicep \
+            --parameters passwordBaseDatos='${{ secrets.DB_PASSWORD }}'
+
+  desplegar:
+    name: Desplegar en Azure
+    runs-on: ubuntu-latest
+    needs: validar
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Iniciar sesion en Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Desplegar infraestructura
+        run: |
+          az deployment sub create \
+            --location spaincentral \
+            --template-file infra/main.bicep \
+            --parameters passwordBaseDatos='${{ secrets.DB_PASSWORD }}' \
+            --name despliegue-${{ github.run_number }}
