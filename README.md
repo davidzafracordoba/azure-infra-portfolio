@@ -9,12 +9,12 @@ cómputo, almacenamiento, monitorización, control de costes e infraestructura c
 
 ## 🗺️ Hoja de ruta
 - [x] **Fase 0 – Cimientos:** suscripción, MFA, presupuesto con alertas y herramientas
-- [ ] **Fase 1 – Identidad y gobierno:** Entra ID, usuarios, grupos, RBAC, convenciones y etiquetas
-- [ ] **Fase 2 – Red:** VNet, subredes, NSG y acceso seguro
-- [ ] **Fase 3 – Cómputo y aplicación:** VM Linux + aplicación en PaaS
-- [ ] **Fase 4 – Datos:** Storage Account y base de datos
-- [ ] **Fase 5 – Monitorización y backup:** Azure Monitor, alertas y copias de seguridad
-- [ ] **Fase 6 – IaC y CI/CD:** Bicep + GitHub Actions
+- [x] **Fase 1 – Identidad y gobierno:** Entra ID, usuarios, grupos, RBAC, convenciones y etiquetas
+- [x] **Fase 2 – Red:** VNet, subredes, NSG y acceso seguro
+- [x] **Fase 3 – Cómputo y aplicación:** VM Linux + aplicación en PaaS
+- [x] **Fase 4 – Datos:** Storage Account y base de datos
+- [x] **Fase 5 – Monitorización y backup:** Azure Monitor, alertas y copias de seguridad
+- [x] **Fase 6 – IaC y CI/CD:** Bicep + GitHub Actions
 
 ##  Control de costes
 - Presupuesto mensual con alertas al 50 %, 80 % y 100 %
